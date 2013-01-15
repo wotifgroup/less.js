@@ -19,6 +19,7 @@ VERSION = `cat package.json | grep version \
 														| grep -o '[0-9]\.[0-9]\.[0-9]\+'`
 DIST = dist/less-${VERSION}.js
 RHINO = dist/less-rhino-${VERSION}.js
+WOTRHINO = dist/less-wotrhino-${VERSION}.js
 DIST_MIN = dist/less-${VERSION}.min.js
 
 browser-prepare: DIST := test/browser/less.js
@@ -30,6 +31,7 @@ less:
 	@@echo "(function (window, undefined) {" >> ${DIST}
 	@@cat build/require.js\
 	      build/ecma-5.js\
+	      ${SRC}/preamble.js\
 	      ${SRC}/parser.js\
 	      ${SRC}/functions.js\
 	      ${SRC}/colors.js\
@@ -54,6 +56,7 @@ rhino:
 	@@touch ${RHINO}
 	@@cat build/require-rhino.js\
 	      build/ecma-5.js\
+	      ${SRC}/preamble.js\
 	      ${SRC}/parser.js\
 	      ${SRC}/functions.js\
 	      ${SRC}/colors.js\
@@ -61,6 +64,20 @@ rhino:
 	      ${SRC}/tree.js\
 	      ${SRC}/rhino.js > ${RHINO}
 	@@echo ${RHINO} built.
+
+wotrhino:
+	@@mkdir -p dist
+	@@touch ${RHINO}
+	@@cat build/require-rhino.js\
+	      build/ecma-5.js\
+	      ${SRC}/preamble-wotrhino.js\
+	      ${SRC}/parser.js\
+	      ${SRC}/functions.js\
+	      ${SRC}/colors.js\
+	      ${SRC}/tree/*.js\
+	      ${SRC}/tree.js\
+	      ${SRC}/wotrhino.js > ${WOTRHINO}
+	@@echo ${WOTRHINO} built.
 
 min: less
 	@@echo minifying...
