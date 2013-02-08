@@ -69,7 +69,6 @@ wotrhino:
 	@@mkdir -p dist
 	@@touch ${RHINO}
 	@@cat build/require-rhino.js\
-	      build/ecma-5.js\
 	      ${SRC}/preamble-wotrhino.js\
 	      ${SRC}/parser.js\
 	      ${SRC}/functions.js\
